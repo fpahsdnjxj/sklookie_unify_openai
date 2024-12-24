@@ -1,0 +1,40 @@
+name: Deploy Streamlit App
+
+# 워크플로를 실행할 이벤트
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 push될 때 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # 실행 환경
+
+    steps:
+      # 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Python 설정
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+
+      # 종속성 설치
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # 환경 변수 설정 (GitHub Secrets 사용)
+      - name: Set environment variables
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: echo "Environment variables set"
+
+      # Streamlit 실행 (테스트용)
+      - name: Run Streamlit App
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: streamlit run chat_answer.py --server.port=8501
