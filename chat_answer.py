@@ -5,14 +5,11 @@ from langchain_core.documents import Document
 from langgraph.graph import START, StateGraph
 from langchain_openai import ChatOpenAI
 import os
-from dotenv import load_dotenv
 import streamlit as st
 
 from prompts import prompt
 
-load_dotenv()
-
-api_key = os.environ.get("OPENAI_API_KEY")
+api_key=st.secrets["OPENAI_API_KEY"]
 
 embeddings = OpenAIEmbeddings(model="text-embedding-3-large", openai_api_key=api_key)
 db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "./2023_pdf"))
