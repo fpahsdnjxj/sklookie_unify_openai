@@ -6,7 +6,7 @@ from langgraph.graph import START, StateGraph
 from langchain_openai import ChatOpenAI
 import os
 
-from openai_code.prompts import prompt
+from prompts import prompt
 
 embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "./2023_pdf"))
